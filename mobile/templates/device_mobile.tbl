@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/> 
+<title>悦惠淘自动贩卖机</title>
+<link href="styles/bootstrap.min.css" rel="stylesheet" />
+<link href="styles/style.css" rel="stylesheet" />
+{literal}
+<script type="text/javascript">
+  function pay(box_id)
+  {
+    location.href="payment/wxpay/pay.php?box_id=" + box_id;
+  }
+</script>
+{/literal}
+</head>
+<body>
+ <div class="container">
+  <div class="header">
+   <img src="images/mlogo.png" style="margin: 10px 0px 0px 15px" />
+  </div>
+  <div class="products-list">
+     {foreach from=$box_list1 item=box_data}
+     <div class="product" onclick="pay({$box_data.id})">
+     </div>
+     {/foreach}
+     {foreach from=$box_list2 item=box_data}
+     <div class="product2">
+     </div>
+     {/foreach}
+  </div>
+ <div class="footer">
+  <div class="gezifooter">
+   <p>2005-2016 悦惠淘 版权所有，并保留所有权利</p>
+  </div>
+ </div>
+</body>
+</html>

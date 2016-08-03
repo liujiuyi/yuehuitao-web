@@ -1,0 +1,94 @@
+﻿body {
+ margin: 0 auto;
+ min-width: 320px;
+ max-width: 480px;
+}
+
+a:link, a:visited {
+ font-style: normal;
+}
+
+img {
+ border: 0 none;
+ height: auto;
+ max-width: 100%;
+ vertical-align: middle;
+}
+
+.header {
+ position: relative;
+ width: 100%;
+}
+
+.container {
+ margin: 0 auto;
+ min-height: 300px;
+ width: 100%
+}
+
+.products-list {
+ overflow: hidden;
+ margin-top: 10px;
+}
+
+.products-list .product {
+ width: 12.5%;
+ height: 60px;
+ float: left;
+ text-align: center;
+ box-sizing: border-box;
+ display: block;
+ padding: 5px;
+ font-size: 1.07142em;
+ position: relative;
+ background: #36A1DB;
+ border: 1px solid #ffffff;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+.products-list .product2 {
+ width: 25%;
+ height: 60px;
+ float: left;
+ text-align: center;
+ box-sizing: border-box;
+ display: block;
+ padding: 5px;
+ font-size: 1.07142em;
+ position: relative;
+ background: #36A1DB;
+ border: 1px solid #ffffff;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+.info {
+ padding: 5px 0;
+ height: 50px;
+}
+
+.info .name {
+ text-overflow: ellipsis;
+ white-space: nowrap;
+ overflow: hidden;
+ color: #000;
+}
+
+.info .price {
+ 
+}
+
+.info .price span {
+ font-size: 1em;
+ color: #c6204d;
+}
+
+.f {
+ background-color: #36A1DB;
+}
+
+.footer {
+ margin: 10px auto 0px;
+ text-align: center;
+}
