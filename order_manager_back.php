@@ -23,7 +23,7 @@ try {
    $sql = "select date_format(date_add(CURDATE(),interval " . $x_pos . " day), '%Y-%m-%d')";
    $current = executeScalar ( $db, $sql ); // 返回日期
    
-   $sql = "SELECT o.*, d.device_name FROM vem_order_list o, vem_device d where o.device_id = o.id and o.create_date like '" . $current . "%' ORDER BY o.id DESC";
+   $sql = "SELECT o.*, d.device_name FROM vem_order_list o, vem_device d where o.device_id = d.id and status = 1 and o.create_date like '" . $current . "%' ORDER BY o.id DESC";
    $listsql = "SELECT * FROM (" . $sql . ") AS t";
    
    $start = getQueryData ( 'start' );

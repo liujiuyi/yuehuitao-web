@@ -27,12 +27,12 @@ date_default_timezone_set ( "PRC" );
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>悦惠淘自动售卖机管理系统</title>
 <!-- Include Ext and app-specific scripts: -->
-<script type="text/javascript" src="ext-js/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="ext-js/ext-all.js"></script>
+<script type="text/javascript" src="http://file.tttalk.org/public/ext-3.4.1/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="http://file.tttalk.org/public/ext-3.4.1/ext-all.js"></script>
 
 <!-- Include Ext stylesheets here: -->
 <link rel="stylesheet" type="text/css"
- href="ext-js/resources/css/ext-all.css">
+ href="http://file.tttalk.org/public/ext-3.4.1/resources/css/ext-all.css">
 
 <!-- Common Styles for the examples -->
 <link rel="stylesheet" type="text/css" href="css/styles.css" />

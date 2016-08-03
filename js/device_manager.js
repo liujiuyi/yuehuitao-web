@@ -17,46 +17,54 @@ pageContents = function() {
     viewConfig : {
       forceFit : true
     },
-    columns : [ new Ext.grid.RowNumberer(), {
-      header : '设备ID',
-      sortable : true,
-      hidden : true,
-      dataIndex : 'id'
-    }, {
-      header : '设备标识',
-      sortable : true,
-      height : 20,
-      dataIndex : 'device_code'
-    }, {
-      header : '设备名称',
-      sortable : true,
-      height : 20,
-      dataIndex : 'device_name'
-    }, {
-      header : '设备地址',
-      sortable : true,
-      height : 20,
-      dataIndex : 'device_address'
-    }, {
-      height : 20,
-      header : '格子数量',
-      sortable : true,
-      height : 20,
-      dataIndex : 'box_number'
-    }, {
-      xtype : 'actioncolumn',
-      header : '操作',
-      align : 'center',
-      width : 50,
-      items : [ {
-        icon : 'images/return.png',
-        tooltip : 'URL',
-        handler : function(grid, rowIndex, colIndex) {
-          var gridRecs = grid.getStore().getAt(rowIndex);
-          alert("二维码链接：" + CODE_URL + "?device_id=" + gridRecs.get('id'));
-        }
-      } ]
-    } ],
+    columns : [
+        new Ext.grid.RowNumberer(),
+        {
+          header : '设备ID',
+          sortable : true,
+          hidden : true,
+          dataIndex : 'id'
+        },
+        {
+          header : '设备标识',
+          sortable : true,
+          height : 20,
+          dataIndex : 'device_code'
+        },
+        {
+          header : '设备名称',
+          sortable : true,
+          height : 20,
+          dataIndex : 'device_name'
+        },
+        {
+          header : '设备地址',
+          sortable : true,
+          height : 20,
+          dataIndex : 'device_address'
+        },
+        {
+          height : 20,
+          header : '格子数量',
+          sortable : true,
+          height : 20,
+          dataIndex : 'box_number'
+        },
+        {
+          xtype : 'actioncolumn',
+          header : '操作',
+          align : 'center',
+          width : 50,
+          items : [ {
+            icon : 'images/return.png',
+            tooltip : 'URL',
+            handler : function(grid, rowIndex, colIndex) {
+              var gridRecs = grid.getStore().getAt(rowIndex);
+              Ext.MessageBox.alert("二维码链接", CODE_URL + "?device_id="
+                  + gridRecs.get('id'));
+            }
+          } ]
+        } ],
     tbar : [ {
       text : '添加设备',
       icon : 'images/add.png',

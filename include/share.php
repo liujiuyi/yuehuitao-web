@@ -13,7 +13,7 @@ date_default_timezone_set ( "PRC" );
 // Storage API
 include_once ("config.inc.php");
 // Log4PHP
-require_once (dirname(__FILE__) ."/log4php/Logger.php");
+include_once('log4php/Logger.php');
 Logger::configure (dirname(__FILE__) ."/log4php.properties" );
 $logger = Logger::getRootLogger ();
 

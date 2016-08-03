@@ -5,16 +5,27 @@ require_once "WxPay.JsApiPay.php";
 
 require_once ('../../../include/share.php');
 // DB连接
-$db = connectDB();
-
+$db = connectDB ();
+// 检索商品信息
 $box_id = getQueryData ( "box_id" );
 $sql = "select * from vem_device_box where id = " . $box_id;
 
 $result = querySQL ( $db, $sql );
 $box_info = mysql_fetch_assoc ( $result );
 
+// 设备id
+$device_id = $box_info ['device_id'];
+// 商品名称
 $goods_name = $box_info ['goods_name'];
+// 商品价格
 $goods_price = $box_info ['goods_price'];
+
+if (empty ( $device_id ) || empty ( $goods_name ) || empty ( $goods_price )) {
+ echo "商品参数错误";
+ return;
+}
+
+$order_id = WxPayConfig::MCHID . date ( "YmdHis" );
 
 // ①、获取用户openid
 $tools = new JsApiPay ();
@@ -24,16 +35,21 @@ $openId = $tools->GetOpenid ();
 $input = new WxPayUnifiedOrder ();
 $input->SetBody ( $goods_name );
 $input->SetAttach ( "自动售货机" );
-$input->SetOut_trade_no ( WxPayConfig::MCHID . date ( "YmdHis" ) );
+$input->SetOut_trade_no ( $order_id );
 $input->SetTotal_fee ( $goods_price * 10 * 10 );
 $input->SetTime_start ( date ( "YmdHis" ) );
 $input->SetTime_expire ( date ( "YmdHis", time () + 600 ) );
-$input->SetNotify_url ( "http://paysdk.weixin.qq.com/example/notify.php" );
+$input->SetNotify_url ( "http://www.yuehuitao.com/vending_machine/mobile/payment/wxpay/notify.php" );
 $input->SetTrade_type ( "JSAPI" );
 $input->SetOpenid ( $openId );
 $order = WxPayApi::unifiedOrder ( $input );
 $jsApiParameters = $tools->GetJsApiParameters ( $order );
 // ③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
+
+
+// 创建订单
+$sql = "insert into vem_order_list (order_id, device_id, goods_name, order_price, create_date) values ('$order_id', '$device_id', '$goods_name', '$goods_price', now())";
+executeSQL ( $db, $sql );
 ?>
 
 <html>
@@ -73,7 +89,7 @@ $jsApiParameters = $tools->GetJsApiParameters ( $order );
 <body>
  <br />
  <font color="#9ACD32"><b>该笔订单支付金额为<span
-   style="color: #f00; font-size: 50px">$goods_price * 10 * 10</span>元钱
+   style="color: #f00; font-size: 50px"><?php echo $goods_price;?></span>元钱
  </b></font>
  <br />
  <br />
