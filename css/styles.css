@@ -257,3 +257,6 @@ tr.recevie-row .x-grid-cell {
  white-space: normal;
  overflow: visible;
 }
+.schedule-red {
+    background-color: #FFB7DD;
+}

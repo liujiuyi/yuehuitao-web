@@ -157,6 +157,11 @@ pageContents = function() {
     region : 'west',
     store : store_box_list,
     viewConfig : {
+      getRowClass : function(rec, index) {
+        if (rec.get('status') == 0) {
+          return 'schedule-red';
+        }
+      },
       forceFit : true
     },
     columns : [ new Ext.grid.RowNumberer(), {
