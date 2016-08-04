@@ -491,6 +491,21 @@ function saveLoginInfo($userid) {
 	setSessionData ( $user_login_key, $user_login_data );
 }
 
+function sendOpenBox( $conn, $box_id ) {
+ $sql = "select b.box_number, d.device_code from vem_device d, vem_device_box b where d.id = b.device_id and b.id = " . $box_id;
+ $result = querySQL ( $conn, $sql );
+ $open_info = mysql_fetch_assoc ( $result );
+ if ($open_info != null) {
+  $url = OPEN_DEVICE_URL . 'command.action?action=01&index=' . $open_info ['box_number'] . '&device=' . $open_info ['device_code'] . '';
+  $ch = curl_init();
+  $timeout = 5;
+  curl_setopt ($ch, CURLOPT_URL, $url);
+  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  $file_contents = curl_exec($ch);
+  curl_close($ch);
+ }
+}
 
 
 ?>

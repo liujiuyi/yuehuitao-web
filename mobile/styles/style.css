@@ -91,6 +91,19 @@ img {
  font-size: 16px;
 }
 
+.open_button {
+ margin-top: 20px;
+ width: 100%;
+ height: 50px;
+ border-radius: 15px;
+ background-color: #004040;
+ border: 0px #004040 solid;
+ cursor: pointer;
+ color: white;
+ font-size: 16px;
+ width: 100%;
+}
+
 .return_button {
  margin-top: 20px;
  width: 100%;

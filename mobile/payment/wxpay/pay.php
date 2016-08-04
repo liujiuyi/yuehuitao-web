@@ -50,7 +50,7 @@ $jsApiParameters = $tools->GetJsApiParameters ( $order );
 // ③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
 
 // 创建订单
-$sql = "insert into vem_order_list (order_id, device_id, box_id, goods_name, order_price, create_date) values ('$order_id', '$device_id',  '$box_id', '$goods_name', '$goods_price', now())";
+$sql = "insert into vem_order_list (order_id, device_id, box_id, goods_name, order_price, create_date) values ('$order_id', '$device_id', '$box_id', '$goods_name', '$goods_price', now())";
 executeSQL ( $db, $sql );
 ?>
 
@@ -60,6 +60,7 @@ executeSQL ( $db, $sql );
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>微信支付</title>
 <link href="../../styles/style.css" rel="stylesheet" />
+<script src="../../js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	//调用微信JS api 支付
 	function jsApiCall()
@@ -87,6 +88,19 @@ executeSQL ( $db, $sql );
 		    jsApiCall();
 		}
 	}
+	
+	function openBox(){
+	  $.ajax({
+    	type:'post',
+    	url:'../../check_over_order.php',
+      data:{ order_id : '<?php echo $order_id;?>' },
+      dataType:'json',
+      success:function(data){
+        alert(decodeURI(data.msg));
+      },
+      error:function(){}
+	  }); 
+	}
 	</script>
 </head>
 <body>
@@ -96,14 +110,13 @@ executeSQL ( $db, $sql );
   </div>
   <div class="wxpay_content">
    <font><b class="wxpay_title">购买的商品为<span class="wxpay_value"><?php echo $goods_name;?></span></b></font>
-   <br /> 
-   <br /> 
-   <font><b class="wxpay_title">支付金额为<span class="wxpay_value"><?php echo $goods_price;?></span>元钱</b></font> 
-   <br /> 
-   <br />
+   <br /> <br /> <font><b class="wxpay_title">支付金额为<span
+     class="wxpay_value"><?php echo $goods_price;?></span>元钱
+   </b></font> <br /> <br />
    <div align="center">
     <button class="wxpay_button" type="button" onclick="callpay()">立即支付</button>
     <button class="return_button" type="button" onclick="history.go(-1)">返回上一页</button>
+    <button class="open_button" type="button" onclick="openBox()">弹开格子</button>
    </div>
   </div>
   <div class="footer">
