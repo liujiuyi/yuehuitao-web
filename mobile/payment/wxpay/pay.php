@@ -59,6 +59,7 @@ executeSQL ( $db, $sql );
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>微信支付</title>
+<link href="../../styles/style.css" rel="stylesheet" />
 <script type="text/javascript">
 	//调用微信JS api 支付
 	function jsApiCall()
@@ -89,16 +90,27 @@ executeSQL ( $db, $sql );
 	</script>
 </head>
 <body>
- <br />
- <font color="#9ACD32"><b>该笔订单支付金额为<span
-   style="color: #f00; font-size: 50px"><?php echo $goods_price;?></span>元钱
- </b></font>
- <br />
- <br />
- <div align="center">
-  <button
-   style="width: 210px; height: 50px; border-radius: 15px; background-color: #FE6714; border: 0px #FE6714 solid; cursor: pointer; color: white; font-size: 16px;"
-   type="button" onclick="callpay()">立即支付</button>
- </div>
+ <div class="container">
+  <div class="header">
+   <img src="../../images/mlogo.png" style="margin: 10px 0px 0px 15px" />
+  </div>
+  <div class="wxpay_content">
+   <font><b class="wxpay_title">购买的商品为<span class="wxpay_value"><?php echo $goods_name;?></span></b></font>
+   <br /> 
+   <br /> 
+   <font><b class="wxpay_title">支付金额为<span class="wxpay_value"><?php echo $goods_price;?></span>元钱</b></font> 
+   <br /> 
+   <br />
+   <div align="center">
+    <button class="wxpay_button" type="button" onclick="callpay()">立即支付</button>
+    <button class="return_button" type="button" onclick="history.go(-1)">返回上一页</button>
+   </div>
+  </div>
+  <div class="footer">
+   <div class="gezifooter">
+    <p>2005-2016 悦惠淘 版权所有，并保留所有权利</p>
+   </div>
+  </div>
+
 </body>
 </html>
