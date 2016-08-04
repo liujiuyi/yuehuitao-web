@@ -43,12 +43,26 @@ class PayNotifyCallBack extends WxPayNotify {
   // DB连接
   $out_trade_no = $data ["out_trade_no"];
   $db = connectDB ();
-  $sql = "select status from vem_order_list where order_id =" . correctSQL ( $out_trade_no );
-  $status = executeScalar ( $db, $sql );
-  if ($status != 1) {
+  $sql = "select * from vem_order_list where order_id =" . correctSQL ( $out_trade_no );
+  $result = querySQL ( $db, $sql );
+  $order_info = mysql_fetch_assoc ( $result );
+  if ($order_info != null && $order_info ['status'] != 1) {
+   // 发送http请求开门
+   $sql = "select b.box_number, d.device_code from vem_device d, vem_device_box b where d.id = b.device_id and b.id = " . $order_info ['box_id'];
+   $result = querySQL ( $db, $sql );
+   $open_info = mysql_fetch_assoc ( $result );
+   if ($open_info != null) {
+    $url = OPEN_DEVICE_URL . 'command.action?action=01&index=' . $open_info ['box_number'] . '&device=' . $open_info ['device_code'] . '';
+    Log::DEBUG ( "open url:" . $url);
+    file_get_contents ( $url );
+   }
+   // 更改订单状态
    $sql = "update vem_order_list set status = 1 where order_id =" . correctSQL ( $out_trade_no );
    executeSQL ( $db, $sql );
-   // 发送http请求开门
+   
+   // 更改盒子状态
+   $sql = "update vem_device_box set status = 0 where id =" . $order_info ['box_id'];
+   executeSQL ( $db, $sql );
   }
   return true;
  }

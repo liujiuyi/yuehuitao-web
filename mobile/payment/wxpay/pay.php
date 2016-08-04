@@ -9,7 +9,12 @@ require_once ('../../../include/device.php');
 $db = connectDB ();
 // 检索商品信息
 $box_id = getQueryData ( "box_id" );
-$box_info = get_device_box_info($db, $box_id);
+$box_info = get_device_box_info ( $db, $box_id );
+
+if ($box_info ['status'] != 1) {
+ echo "<script>alert('该商品缺货');history.go(-1);</script>";
+ return;
+}
 
 // 设备id
 $device_id = $box_info ['device_id'];
@@ -19,7 +24,7 @@ $goods_name = $box_info ['goods_name'];
 $goods_price = $box_info ['goods_price'];
 
 if (empty ( $device_id ) || empty ( $goods_name ) || empty ( $goods_price )) {
- echo "商品参数错误";
+ echo "<script>alert('商品参数错误');history.go(-1);</script>";
  return;
 }
 
@@ -44,9 +49,8 @@ $order = WxPayApi::unifiedOrder ( $input );
 $jsApiParameters = $tools->GetJsApiParameters ( $order );
 // ③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
 
-
 // 创建订单
-$sql = "insert into vem_order_list (order_id, device_id, goods_name, order_price, create_date) values ('$order_id', '$device_id', '$goods_name', '$goods_price', now())";
+$sql = "insert into vem_order_list (order_id, device_id, box_id, goods_name, order_price, create_date) values ('$order_id', '$device_id',  '$box_id', '$goods_name', '$goods_price', now())";
 executeSQL ( $db, $sql );
 ?>
 
