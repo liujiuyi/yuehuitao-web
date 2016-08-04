@@ -491,65 +491,6 @@ function saveLoginInfo($userid) {
 	setSessionData ( $user_login_key, $user_login_data );
 }
 
-// Check user/pwd
-function checkUserPwd($conn, $userid, $password) {
-	$sql = "SELECT id, username, fullname, type, realname, last_login_ip, last_login_date FROM tbl_user WHERE username = '" . toStringForSql ( $userid ) . "' AND password = '" . toStringForSql ( $password ) . "'";
-	
-	$result = querySQL ( $conn, $sql );
-	$row = mysql_fetch_array ( $result );
-	
-	return $row;
-}
 
-function encryptString($str, $key) {
-	$len1 = strlen ( $str );
-	$len2 = strlen ( $key );
-	
-	$len = min ( $len1, $len2 );
-	
-	$result = "";
-	
-	for($i = 0; $i < $len1; $i ++) {
-		/*
-			if ($i < $len)
-				$result .= CHR(ORD(SUBSTR($str, $i, 1)) ^ ORD(SUBSTR($key, $i, 1)));
-			else
-				$result .= SUBSTR($str, $i, 1);
-*/
-		$result .= '.';
-		
-		if ($i < $len)
-			$result .= ORD ( SUBSTR ( $str, $i, 1 ) ) ^ ORD ( SUBSTR ( $key, $i, 1 ) );
-		else
-			$result .= ORD ( SUBSTR ( $str, $i, 1 ) );
-	}
-	
-	return $result;
-}
 
-function decryptString($str, $key) {
-	$arr = explode ( ".", $str );
-	array_shift ( $arr );
-	
-	$str = "";
-	for($i = 0; $i < count ( $arr ); $i ++) {
-		$str .= CHR ( intval ( $arr [$i] ) );
-	}
-	
-	$len1 = strlen ( $str );
-	$len2 = strlen ( $key );
-	
-	$len = min ( $len1, $len2 );
-	
-	$result = "";
-	
-	for($i = 0; $i < $len1; $i ++) {
-		if ($i < $len)
-			$result .= CHR ( ORD ( SUBSTR ( $str, $i, 1 ) ) ^ ORD ( SUBSTR ( $key, $i, 1 ) ) );
-		else
-			$result .= SUBSTR ( $str, $i, 1 );
-	}
-	
-	return $result;
-}
 ?>

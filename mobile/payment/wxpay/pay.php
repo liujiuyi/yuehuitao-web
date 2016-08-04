@@ -4,14 +4,12 @@ require_once "lib/WxPay.Api.php";
 require_once "WxPay.JsApiPay.php";
 
 require_once ('../../../include/share.php');
+require_once ('../../../include/device.php');
 // DB连接
 $db = connectDB ();
 // 检索商品信息
 $box_id = getQueryData ( "box_id" );
-$sql = "select * from vem_device_box where id = " . $box_id;
-
-$result = querySQL ( $db, $sql );
-$box_info = mysql_fetch_assoc ( $result );
+$box_info = get_device_box_info($db, $box_id);
 
 // 设备id
 $device_id = $box_info ['device_id'];

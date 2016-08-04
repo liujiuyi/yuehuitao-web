@@ -1,5 +1,6 @@
 <?php
 require_once ('include/share.php');
+require_once ('include/device.php');
 // DB连接
 $db = connectDB ();
 
@@ -17,11 +18,7 @@ try {
  switch ($func) {
   case 'box_list' :
    $device_id = getQueryData ( "device_id" );
-   $sql = "SELECT *  FROM vem_device_box where device_id = " . $device_id . " ORDER BY id ASC";
-   
-   $listsql = "SELECT * FROM (" . $sql . ") AS t";
-   
-   $result = querySQL ( $db, $listsql );
+   $result = get_device_box_list($db, $device_id);
    
    $data = array ();
    while ( $row = mysql_fetch_assoc ( $result ) ) {
@@ -49,10 +46,7 @@ try {
    break;
   case 'box_info' :
    $box_id = getQueryData ( 'box_id' );
-   $sql = "SELECT * FROM vem_device_box WHERE id = " . $box_id;
-   
-   $result = querySQL ( $db, $sql );
-   $row = mysql_fetch_assoc ( $result );
+   $row = get_device_box_info ( $db, $box_id );
    
    $data = array ();
    $data [] = $row;

@@ -1,5 +1,6 @@
 <?php
 require_once ('include/share.php');
+require_once ('include/device.php');
 // DB连接
 $db = connectDB ();
 
@@ -87,10 +88,7 @@ try {
    break;
   case 'device_info' :
    $device_id = getQueryData ( 'device_id' );
-   $sql = "SELECT * FROM vem_device WHERE id = " . $device_id;
-   
-   $result = querySQL ( $db, $sql );
-   $row = mysql_fetch_assoc ( $result );
+   $row = get_device_info($db, $device_id);
    
    $data = array ();
    $data [] = $row;

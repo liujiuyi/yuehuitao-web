@@ -4,12 +4,12 @@ $smarty = new Smarty ();
 $smarty->compile_check = true;
 
 require_once ('../include/share.php');
+require_once ('../include/device.php');
 // DB连接
 $db = connectDB ();
 
 $device_id = getQueryData ( "device_id" );
-$sql = "SELECT *  FROM vem_device_box where device_id = " . $device_id . " ORDER BY id ASC";
-$result = querySQL ( $db, $sql );
+$result = get_device_box_list($db, $device_id);
 $data1 = array ();
 $data2 = array ();
 
