@@ -208,6 +208,33 @@ pageContents = function() {
           var gridRecs = grid.getStore().getAt(rowIndex);
           onEditBox(gridRecs.get('id'));
         }
+      }, {
+        icon : 'images/open.png',
+        tooltip : 'open',
+        handler : function(grid, rowIndex, colIndex) {
+          var gridRecs = grid.getStore().getAt(rowIndex);
+          Ext.MessageBox.confirm("Manager", "确定要弹开吗？", function(btn) {
+            var box_id = gridRecs.get('id');
+            if (btn == "yes") {
+              Ext.Ajax.request({
+                url : 'box_manager_back.php?func=box_open&id=' + box_id,
+                callback : function(options, success, response) {
+                  var rs = Ext.decode(response.responseText);
+                  var msg = rs.msg;
+                  var flag = rs.success;
+                  if (success) {
+                    if (flag == "false") {
+                      ShowMessage('Manager', decodeURI(msg), 'ERROR');
+                    }
+                  } else {
+                    ShowMessage('Manager', decodeURI(msg), 'ERROR');
+                  }
+                }
+              });
+            }
+          });
+
+        }
       } ]
     } ],
     listeners : {

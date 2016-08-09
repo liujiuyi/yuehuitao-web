@@ -89,7 +89,10 @@ executeSQL ( $db, $sql );
 		}
 	}
 	
-	function openBox(){
+
+	
+	function openBox(val){
+		val.setAttribute("disabled", true); 
 	  $.ajax({
     	type:'post',
     	url:'../../check_over_order.php',
@@ -97,6 +100,9 @@ executeSQL ( $db, $sql );
       dataType:'json',
       success:function(data){
         alert(decodeURI(data.msg));
+        if(data.success == 'false'){
+          val.removeAttribute("disabled");    
+        }
       },
       error:function(){}
 	  }); 
@@ -116,7 +122,7 @@ executeSQL ( $db, $sql );
    <div align="center">
     <button class="wxpay_button" type="button" onclick="callpay()">立即支付</button>
     <button class="return_button" type="button" onclick="history.go(-1)">返回上一页</button>
-    <button class="open_button" type="button" onclick="openBox()">弹开格子</button>
+    <input class="open_button" type="button" value="弹开格子" onclick="openBox(this)"/>
    </div>
   </div>
   <div class="footer">

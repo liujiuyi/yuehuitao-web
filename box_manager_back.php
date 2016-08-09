@@ -18,7 +18,7 @@ try {
  switch ($func) {
   case 'box_list' :
    $device_id = getQueryData ( "device_id" );
-   $result = get_device_box_list($db, $device_id);
+   $result = get_device_box_list ( $db, $device_id );
    
    $data = array ();
    while ( $row = mysql_fetch_assoc ( $result ) ) {
@@ -68,6 +68,14 @@ try {
    echo ',"success": "true"}';
    break;
   
+  case 'box_open' :
+   $box_id = getQueryData ( 'id' );
+   if (sendOpenBox ( $db, $box_id )) {
+    responseData ( true );
+   } else {
+    responseData ( false, '发送命令失败' );
+   }
+   break;
   default :
    
    responseData ( false, '无效的请求' );

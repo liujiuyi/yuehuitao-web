@@ -44,7 +44,7 @@ class PayNotifyCallBack extends WxPayNotify {
   // DB连接
   $out_trade_no = $data ["out_trade_no"];
   $db = connectDB ();
-  $order_info = get_order_info($db, $out_trade_no);
+  $order_info = get_order_info ( $db, $out_trade_no );
   if ($order_info != null && $order_info ['status'] != 1) {
    // 更改订单状态
    $sql = "update vem_order_list set status = 1 where order_id =" . correctSQL ( $out_trade_no );
@@ -55,7 +55,11 @@ class PayNotifyCallBack extends WxPayNotify {
    executeSQL ( $db, $sql );
    
    // 发送http请求开门
-   sendOpenBox( $db, $order_info['box_id'] );
+   if (sendOpenBox ( $db, $order_info ['box_id'] )) {
+    // 更改订单状态
+    $sql = "update vem_order_list set is_open = 1 where order_id =" . correctSQL ( $out_trade_no );
+    executeSQL ( $db, $sql );
+   }
   }
   return true;
  }
