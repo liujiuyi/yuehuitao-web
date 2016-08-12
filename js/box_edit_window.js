@@ -5,6 +5,7 @@ editBoxWindow = function(grid, box_id) {
     xtype : 'form',
     width : 180,
     defaultType : 'textfield',
+    fileUpload : true,
     frame : true,
     url : 'box_manager_back.php?func=box_update',
     labelAlign : 'right',
@@ -45,6 +46,21 @@ editBoxWindow = function(grid, box_id) {
         name : 'status',
         inputValue : '0'
       } ]
+    }, {
+      xtype : 'fileuploadfield',
+      name : 'photo',
+      emptyText : '选择商品图片',
+      fieldLabel : 'Photo',
+      buttonText : '',
+      anchor : '90%',
+      buttonCfg : {
+        iconCls : 'upload-icon'
+      }
+    }, {
+      fieldLabel : '商品图片',
+      xtype : 'label',
+      html : '<div id="photo_content"></div>',
+      ref : 'photo_content'
     } ],
     buttons : [
         {
@@ -63,15 +79,15 @@ editBoxWindow = function(grid, box_id) {
                       wnd.destroy();
                       grid.store.load();
                     } else if (action.result.success == 'false') {
-                      ShowMessage('Manager',
-                          decodeURI(action.result.msg), 'ERROR');
+                      ShowMessage('Manager', decodeURI(action.result.msg),
+                          'ERROR');
                     }
                   },
                   failure : function(form, action) {
                     if (action != null && action.result != null
                         && action.result.msg != null) {
-                      ShowMessage('Manager',
-                          decodeURI(action.result.msg), 'ERROR');
+                      ShowMessage('Manager', decodeURI(action.result.msg),
+                          'ERROR');
                     }
                   }
                 });
@@ -107,6 +123,14 @@ editBoxWindow = function(grid, box_id) {
           frm.getForm().findField('status').items.get(0).setValue(true);
         } else {
           frm.getForm().findField('status').items.get(1).setValue(true);
+        }
+        var goods_image = action.result.data.goods_image;
+        if (goods_image != '' && goods_image != null) {
+          frm.photo_content.setVisible(true);
+          document.getElementById("photo_content").innerHTML = "<img src='"
+              + PHOTO_URL_PREFIX
+              + goods_image
+              + "' widht='65px' height='65px' onclick='window.open(this.src)' />";
         }
       }
     });

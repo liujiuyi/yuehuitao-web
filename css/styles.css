@@ -257,6 +257,11 @@ tr.recevie-row .x-grid-cell {
  white-space: normal;
  overflow: visible;
 }
+
 .schedule-red {
-    background-color: #FFB7DD;
+ background-color: #FFB7DD;
+}
+
+.upload-icon {
+ background: url('../images/image_add.png') no-repeat 0 0 !important;
 }

@@ -13,7 +13,7 @@ if ($order_info ['status'] == 0) {
 } else {
  responseData ( true, '发送命令成功' );
  // 发送http请求开门
- if (sendOpenBox ( $db, $order_info ['box_id'] )) {
+ if (sendOpenBox ( $db, $order_info ['box_id'], $order_id )) {
   // 更改订单状态
   $sql = "update vem_order_list set is_open = 1 where order_id =" . correctSQL ( $order_id );
   executeSQL ( $db, $sql );

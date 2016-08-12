@@ -55,7 +55,7 @@ class PayNotifyCallBack extends WxPayNotify {
    executeSQL ( $db, $sql );
    
    // 发送http请求开门
-   if (sendOpenBox ( $db, $order_info ['box_id'] )) {
+   if (sendOpenBox ( $db, $order_info ['box_id'], $out_trade_no )) {
     // 更改订单状态
     $sql = "update vem_order_list set is_open = 1 where order_id =" . correctSQL ( $out_trade_no );
     executeSQL ( $db, $sql );

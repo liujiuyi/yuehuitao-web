@@ -29,12 +29,14 @@ try {
    
    break;
   case 'box_update' :
+   $goods_image = savePhoto ( PHOTO_URL_PREFIX );
    $box_id = getQueryData ( 'box_id' );
    $goods_name = getQueryData ( 'goods_name' );
    $goods_price = getQueryData ( 'goods_price' );
    $status = getQueryData ( 'status' );
-   $sql = "UPDATE vem_device_box SET status = " . $status . ", goods_name = " . correctSQL ( $goods_name ) . ", goods_price = " . $goods_price . " WHERE id = " . $box_id;
    
+   $sql = "UPDATE vem_device_box SET goods_image = " . correctSQL ( $goods_image ) . ", status = " . $status . ", 
+     goods_name = " . correctSQL ( $goods_name ) . ", goods_price = " . $goods_price . " WHERE id = " . $box_id;
    $res = executeSQL ( $db, $sql );
    if (! isset ( $res )) {
     responseData ( false, "更新失败" );
@@ -70,7 +72,7 @@ try {
   
   case 'box_open' :
    $box_id = getQueryData ( 'id' );
-   if (sendOpenBox ( $db, $box_id )) {
+   if (sendOpenBox ( $db, $box_id, 'system' )) {
     responseData ( true );
    } else {
     responseData ( false, '发送命令失败' );
