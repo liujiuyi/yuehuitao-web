@@ -24,7 +24,7 @@
      </div>
      {/foreach}
      {foreach from=$box_list2 item=box_data}
-     <div class="product2">
+     <div class="product2" onclick="pay({$box_data.id})">
      </div>
      {/foreach}
   </div>

@@ -22,6 +22,8 @@ $device_id = $box_info ['device_id'];
 $goods_name = $box_info ['goods_name'];
 // 商品价格
 $goods_price = $box_info ['goods_price'];
+// 商品图片
+$goods_image = $box_info ['goods_image'];
 
 if (empty ( $device_id ) || empty ( $goods_name ) || empty ( $goods_price )) {
  echo "<script>alert('商品参数错误');history.go(-1);</script>";
@@ -89,8 +91,6 @@ executeSQL ( $db, $sql );
 		}
 	}
 	
-
-	
 	function openBox(val){
 		val.setAttribute("disabled", true); 
 	  $.ajax({
@@ -102,11 +102,30 @@ executeSQL ( $db, $sql );
         alert(decodeURI(data.msg));
         if(data.success == 'false'){
           val.removeAttribute("disabled");    
+        } else {
+          settime(val);
         }
       },
       error:function(){}
 	  }); 
 	}
+	
+	var countdown=60; 
+	function settime(val) { 
+  	if (countdown == 0) { 
+  		val.removeAttribute("disabled");    
+  		val.value="弹开格子"; 
+  		countdown = 60; 
+  		return;
+  	} else { 
+  		val.setAttribute("disabled", true); 
+  		val.value="重新弹开(" + countdown + ")"; 
+  		countdown--; 
+  	} 
+  	setTimeout(function() { 
+  		 settime(val) 
+  	},1000) 
+	} 
 	</script>
 </head>
 <body>
@@ -116,13 +135,19 @@ executeSQL ( $db, $sql );
   </div>
   <div class="wxpay_content">
    <font><b class="wxpay_title">购买的商品为<span class="wxpay_value"><?php echo $goods_name;?></span></b></font>
-   <br /> <br /> <font><b class="wxpay_title">支付金额为<span
-     class="wxpay_value"><?php echo $goods_price;?></span>元钱
-   </b></font> <br /> <br />
+   <br /> 
+   <br /> 
+   <font><b class="wxpay_title">支付金额为<span class="wxpay_value"><?php echo $goods_price;?></span>元钱</b></font> 
+   <br /> 
+   <br />
+   <?php if (!empty($goods_image)){ ?>
+     <img class="wxpay_image" alt=""
+    src="../../../<?php echo PHOTO_URL_PREFIX. $goods_image?>" />
+   <?php } ?>
    <div align="center">
     <button class="wxpay_button" type="button" onclick="callpay()">立即支付</button>
     <button class="return_button" type="button" onclick="history.go(-1)">返回上一页</button>
-    <input class="open_button" type="button" value="弹开格子" onclick="openBox(this)"/>
+    <input class="open_button" type="button" value="弹开格子" onclick="openBox(this)" />
    </div>
   </div>
   <div class="footer">

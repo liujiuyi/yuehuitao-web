@@ -79,6 +79,12 @@ img {
  font-size: 18px
 }
 
+.wxpay_image {
+ clear: both; 
+ display: block; 
+ margin:auto; 
+}
+
 .wxpay_button {
  margin-top: 20px;
  width: 100%;
