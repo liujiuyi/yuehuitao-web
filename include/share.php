@@ -2,7 +2,6 @@
 error_reporting ( 0 );
 ini_set ( 'display_errors', '0' );
 
-
 session_start ();
 ob_start ( "mb_output_handler" );
 
@@ -13,13 +12,13 @@ date_default_timezone_set ( "PRC" );
 // Storage API
 include_once ("config.inc.php");
 // Log4PHP
-include_once('log4php/Logger.php');
-Logger::configure (dirname(__FILE__) ."/log4php.properties" );
+include_once ('log4php/Logger.php');
+Logger::configure ( dirname ( __FILE__ ) . "/log4php.properties" );
 $logger = Logger::getRootLogger ();
 
-//-------------------------
+// -------------------------
 // 1. 数据库相关
-//-------------------------
+// -------------------------
 
 $g_transaction = false;
 
@@ -131,9 +130,9 @@ function rollbackSQL($conn) {
  $g_transaction = false;
 }
 
-//---------------------
+// ---------------------
 // 2. HTTP关系
-//---------------------
+// ---------------------
 
 // Get query data
 function getQueryData($name) {
@@ -217,7 +216,7 @@ function toStringForSql($txt) {
 
 /**
  * 检查数字参数的数据
- * 
+ *
  * @param string $val
  *         检查的文字列
  * @return result bool 结果
@@ -231,7 +230,7 @@ function isValidNumber($val) {
 
 /**
  * 检查日期参数的数据
- * 
+ *
  * @param string $val
  *         检查的文字列
  * @return result bool 结果
@@ -247,7 +246,7 @@ function isValidDate($val) {
 
 /**
  * 有效的SQL文
- * 
+ *
  * @param string $sql
  *         SQL文字列
  * @param int $type
@@ -538,5 +537,9 @@ function savePhoto($savePath) {
   $logger->debug ( "Invalid file" );
   return null;
  }
+}
+function getMillisecond() {
+ list ( $t1, $t2 ) = explode ( ' ', microtime () );
+ return ( float ) sprintf ( '%.0f', (floatval ( $t1 ) + floatval ( $t2 )) * 1000 );
 }
 ?>

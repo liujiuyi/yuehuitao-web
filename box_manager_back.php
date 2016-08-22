@@ -35,8 +35,14 @@ try {
    $goods_price = getQueryData ( 'goods_price' );
    $status = getQueryData ( 'status' );
    
-   $sql = "UPDATE vem_device_box SET goods_image = " . correctSQL ( $goods_image ) . ", status = " . $status . ", 
-     goods_name = " . correctSQL ( $goods_name ) . ", goods_price = " . $goods_price . " WHERE id = " . $box_id;
+   $sql = "UPDATE vem_device_box SET status = " . $status . ", 
+     goods_name = " . correctSQL ( $goods_name ) . ", goods_price = " . $goods_price;
+   
+   if($goods_image && !empty($goods_image)){
+     $sql .= " ,goods_image = " . correctSQL ( $goods_image );
+   }
+   
+   $sql .= " WHERE id = " . $box_id;
    $res = executeSQL ( $db, $sql );
    if (! isset ( $res )) {
     responseData ( false, "更新失败" );
