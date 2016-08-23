@@ -69,12 +69,12 @@ if (isset ( $_GET ["func"] )) {
             <tr>
              <td align="right">用户ID ：</td>
              <td align="left"><input type="text" id="username"
-              name="username" class="input_1" value="admin" /></td>
+              name="username" class="input_1" /></td>
             </tr>
             <tr>
              <td align="right">密码 ：</td>
              <td align="left"><input type="password" id="password"
-              name="password" class="input_1" value="admin123" /></td>
+              name="password" class="input_1" /></td>
             </tr>
             <tr>
             </tr>

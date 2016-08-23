@@ -5,7 +5,10 @@ function get_order_info($db, $order_id) {
  $result = querySQL ( $db, $sql );
  return mysql_fetch_assoc ( $result );
 }
-
+function create_order($db, $order_id, $device_id, $box_id, $goods_name, $goods_price) {
+ $sql = "insert into vem_order_list (order_id, device_id, box_id, goods_name, order_price, create_date) values (" . correctSQL ( $order_id ) . ", " . correctSQL ( $device_id ) . ", " . correctSQL ( $box_id ) . ", " . correctSQL ( $goods_name ) . ", " . correctSQL ( $goods_price ) . ", now())";
+ executeSQL ( $db, $sql );
+}
 function notify_order($db, $out_trade_no) {
  $order_info = get_order_info ( $db, $out_trade_no );
  if ($order_info != null && $order_info ['status'] != 1) {

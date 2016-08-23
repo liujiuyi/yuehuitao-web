@@ -39,6 +39,24 @@ addDeviceWindow = function(grid) {
       anchor : '55%',
       fieldLabel : '格子数量',
       labelStyle : 'font-weight:bold;'
+    }, {
+      xtype : 'combo',
+      name : 'admin_user_id',
+      hiddenName : 'admin_user_id',
+      width : 150,
+      store : new Ext.data.JsonStore({
+        url : 'admin_user_manager_back.php?func=admin_device_user_list',
+        root : 'data',
+        fields : [ 'id', 'username' ],
+        idProperty : 'id',
+        autoLoad : true
+      }),
+      triggerAction : 'all',
+      mode : 'local',
+      valueField : 'id',
+      displayField : 'username',
+      editable : false,
+      fieldLabel : '加盟商'
     } ],
     buttons : [
         {
@@ -57,15 +75,15 @@ addDeviceWindow = function(grid) {
                       wnd.destroy();
                       grid.store.load();
                     } else if (action.result.success == 'false') {
-                      ShowMessage('Manager',
-                          decodeURI(action.result.msg), 'ERROR');
+                      ShowMessage('Manager', decodeURI(action.result.msg),
+                          'ERROR');
                     }
                   },
                   failure : function(form, action) {
                     if (action != null && action.result != null
                         && action.result.msg != null) {
-                      ShowMessage('Manager',
-                          decodeURI(action.result.msg), 'ERROR');
+                      ShowMessage('Manager', decodeURI(action.result.msg),
+                          'ERROR');
                     }
                   }
                 });

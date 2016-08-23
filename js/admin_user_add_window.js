@@ -1,4 +1,4 @@
-editDeviceWindow = function(grid, device_id) {
+addAdminUserWindow = function(grid) {
   var wnd = this;
 
   var frm = new Ext.FormPanel({
@@ -6,63 +6,40 @@ editDeviceWindow = function(grid, device_id) {
     width : 180,
     defaultType : 'textfield',
     frame : true,
-    url : 'device_manager_back.php?func=device_update',
+    url : 'admin_user_manager_back.php?func=admin_user_create',
     labelAlign : 'right',
     labelPad : 10,
     labelWidth : 80,
     items : [ {
       xtype : 'textfield',
-      name : 'device_id',
-      hidden : true,
-      value : device_id
-    }, {
-      xtype : 'textfield',
-      name : 'device_code',
+      name : 'username',
       allowBlank : false,
       anchor : '55%',
-      fieldLabel : '设备标识',
+      fieldLabel : '用户名',
+      labelStyle : 'font-weight:bold;'
+    }, {
+      xtype : 'textfield',
+      name : 'password',
+      allowBlank : false,
+      anchor : '55%',
+      fieldLabel : '密码',
+      labelStyle : 'font-weight:bold;'
+    }, {
+      xtype : 'radiogroup',
+      name : 'type',
+      allowBlank : false,
+      anchor : '55%',
+      fieldLabel : '类型',
       labelStyle : 'font-weight:bold;',
-      emptyText : '填写格式：yuehuotao0001'
-    }, {
-      xtype : 'textfield',
-      name : 'device_name',
-      allowBlank : false,
-      anchor : '55%',
-      fieldLabel : '设备名称',
-      labelStyle : 'font-weight:bold;'
-    }, {
-      xtype : 'textfield',
-      name : 'device_address',
-      allowBlank : false,
-      anchor : '75%',
-      fieldLabel : '设备地址',
-      labelStyle : 'font-weight:bold;'
-    }, {
-      xtype : 'numberfield',
-      name : 'box_number',
-      allowBlank : false,
-      anchor : '55%',
-      hidden : true,
-      fieldLabel : '格子数量',
-      labelStyle : 'font-weight:bold;'
-    }, {
-      xtype : 'combo',
-      name : 'admin_user_id',
-      hiddenName : 'admin_user_id',
-      width : 150,
-      store : new Ext.data.JsonStore({
-        url : 'admin_user_manager_back.php?func=admin_device_user_list',
-        root : 'data',
-        fields : [ 'id', 'username' ],
-        idProperty : 'id',
-        autoLoad : true
-      }),
-      triggerAction : 'all',
-      mode : 'local',
-      valueField : 'id',
-      displayField : 'username',
-      editable : false,
-      fieldLabel : '加盟商'
+      items : [ {
+        boxLabel : '管理员',
+        name : 'type',
+        inputValue : '1'
+      }, {
+        boxLabel : '加盟商',
+        name : 'type',
+        inputValue : '2'
+      } ]
     } ],
     buttons : [
         {
@@ -102,7 +79,7 @@ editDeviceWindow = function(grid, device_id) {
         } ]
   });
 
-  editDeviceWindow.superclass.constructor.call(this, {
+  addAdminUserWindow.superclass.constructor.call(this, {
     closeAction : 'destroy',
     items : [ frm ],
     height : 250,
@@ -110,20 +87,10 @@ editDeviceWindow = function(grid, device_id) {
     layout : 'fit',
     border : false,
     frame : true,
-    title : '修改设备',
+    title : '添加管理员',
     modal : true,
     plain : true
   });
-  this.on("beforeshow", function() {
-    frm.getForm().load({
-      url : 'device_manager_back.php?func=device_info',
-      params : {
-        device_id : device_id
-      },
-      success : function(form, action) {
-      }
-    });
-  });
 }
 
-Ext.extend(editDeviceWindow, Ext.Window, {});
+Ext.extend(addAdminUserWindow, Ext.Window, {});

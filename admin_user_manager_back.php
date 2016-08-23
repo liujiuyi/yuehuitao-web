@@ -1,6 +1,6 @@
 <?php
 require_once ('include/share.php');
-require_once ('include/device.php');
+require_once ('include/admin_user.php');
 // DB连接
 $db = connectDB ();
 
@@ -16,14 +16,8 @@ try {
  $func = $_REQUEST ["func"];
  
  switch ($func) {
-  case 'device_list' :
-   $sql = "SELECT d.*, u.username as admin_user_name FROM vem_device d LEFT JOIN vem_admin_user u ON d.admin_user_id = u.id";
-   
-   if ($userinfo ["type"] == 2) {
-     $sql .= " WHERE d.admin_user_id = " . $userinfo ["id"];
-   }
-   
-    $sql .= " ORDER BY d.id ASC";
+  case 'admin_user_list' :
+   $sql = "SELECT *  FROM vem_admin_user ORDER BY id ASC";
    
    $listsql = "SELECT * FROM (" . $sql . ") AS t";
    
@@ -50,14 +44,12 @@ try {
    ) );
    
    break;
-  case 'device_create' :
-   $device_code = getQueryData ( 'device_code' );
-   $admin_user_id = getQueryData ( 'admin_user_id' );
-   $device_name = getQueryData ( 'device_name' );
-   $device_address = getQueryData ( 'device_address' );
-   $box_number = getQueryData ( 'box_number' );
+  case 'admin_user_create' :
+   $username = getQueryData ( 'username' );
+   $password = getQueryData ( 'password' );
+   $type = getQueryData ( 'type' );
    
-   $sql = "INSERT INTO vem_device(device_code, device_name, device_address, box_number, admin_user_id ) VALUES( " . correctSQL ( $device_code ) . ", " . correctSQL ( $device_name ) . ", " . correctSQL ( $device_address ) . ", " . $box_number . ", " . correctSQL ( $admin_user_id ) . ")";
+   $sql = "INSERT INTO vem_admin_user(username, password, type, create_date) VALUES( " . correctSQL ( $username ) . ", " . correctSQL ( $password ) . ", " . $type . ", now())";
    
    $res = executeSQL ( $db, $sql );
    if (! isset ( $res )) {
@@ -65,25 +57,16 @@ try {
     $logger->error ( $sql );
     break;
    }
-   
-   $device_id = mysql_insert_id ();
-   
-   for($i = 1; $i <= $box_number; $i ++) {
-    $sql = "INSERT INTO vem_device_box(box_number, device_id ) VALUES(" . $i . ", " . $device_id . ")";
-    
-    $res = executeSQL ( $db, $sql );
-   }
    responseData ( true );
    
    break;
   
-  case 'device_update' :
-   $device_id = getQueryData ( 'device_id' );
-   $admin_user_id = getQueryData ( 'admin_user_id' );
-   $device_name = getQueryData ( 'device_name' );
-   $device_address = getQueryData ( 'device_address' );
-   $device_code = getQueryData ( 'device_code' );
-   $sql = "UPDATE vem_device SET admin_user_id = " . correctSQL ( $admin_user_id ) . ", device_code = " . correctSQL ( $device_code ) . ", device_name = " . correctSQL ( $device_name ) . ", device_address = " . correctSQL ( $device_address ) . " WHERE id = " . $device_id;
+  case 'admin_user_update' :
+   $admin_user_id = getQueryData ( 'id' );
+   $username = getQueryData ( 'username' );
+   $password = getQueryData ( 'password' );
+   $type = getQueryData ( 'type' );
+   $sql = "UPDATE vem_admin_user SET username = " . correctSQL ( $username ) . ", password = " . correctSQL ( $password ) . ", type = " . correctSQL ( $type ) . " WHERE id = " . $admin_user_id;
    
    $res = executeSQL ( $db, $sql );
    if (! isset ( $res )) {
@@ -94,9 +77,9 @@ try {
    responseData ( true );
    
    break;
-  case 'device_info' :
-   $device_id = getQueryData ( 'device_id' );
-   $row = get_device_info ( $db, $device_id );
+  case 'admin_user_info' :
+   $admin_user_id = getQueryData ( 'admin_user_id' );
+   $row = get_admin_user_info ( $db, $admin_user_id );
    
    $data = array ();
    $data [] = $row;
@@ -118,10 +101,10 @@ try {
    echo ',"success": "true"}';
    break;
   
-  case 'device_delete' :
+  case 'admin_user_delete' :
    $id = getQueryData ( 'id' );
    
-   $sql = "DELETE FROM vem_device WHERE id = " . $id;
+   $sql = "DELETE FROM vem_admin_user WHERE id = " . $id;
    
    $res = executeSQL ( $db, $sql );
    if (! isset ( $res )) {
@@ -130,11 +113,20 @@ try {
     break;
    }
    
-   $sql = "DELETE FROM vem_device_box WHERE device_id = " . $id;
-   
-   $res = executeSQL ( $db, $sql );
-   
    responseData ( true );
+   break;
+  
+  case 'admin_device_user_list' :
+   $sql = "SELECT id, username FROM vem_admin_user where type = 2";
+   
+   $result = querySQL ( $db, $sql );
+   $data = array ();
+   while ( $row = mysql_fetch_assoc ( $result ) ) {
+    $data [] = $row;
+   }
+   
+   responseData ( true, null, $data );
+   
    break;
   default :
    

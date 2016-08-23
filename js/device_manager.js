@@ -5,7 +5,7 @@ pageContents = function() {
     url : 'device_manager_back.php?func=device_list',
     root : 'data',
     fields : [ 'id', 'device_code', 'device_name', 'device_address',
-        'box_number' ],
+        'box_number', 'admin_user_name' ],
     idProperty : 'id',
     totalProperty : 'totalCount'
   });
@@ -49,6 +49,12 @@ pageContents = function() {
           sortable : true,
           height : 20,
           dataIndex : 'box_number'
+        },
+        {
+          header : '加盟商',
+          sortable : true,
+          height : 20,
+          dataIndex : 'admin_user_name'
         },
         {
           xtype : 'actioncolumn',

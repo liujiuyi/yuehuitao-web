@@ -5,6 +5,7 @@ require_once "WxPay.JsApiPay.php";
 
 require_once ('../../../include/share.php');
 require_once ('../../../include/device.php');
+require_once ('../../../include/order.php');
 // DB连接
 $db = connectDB ();
 // 检索商品信息
@@ -52,8 +53,7 @@ $jsApiParameters = $tools->GetJsApiParameters ( $order );
 // ③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
 
 // 创建订单
-$sql = "insert into vem_order_list (order_id, device_id, box_id, goods_name, order_price, create_date) values ('$order_id', '$device_id', '$box_id', '$goods_name', '$goods_price', now())";
-executeSQL ( $db, $sql );
+create_order($db, $order_id, $device_id, $box_id, $goods_name, $goods_price);
 ?>
 
 <html>

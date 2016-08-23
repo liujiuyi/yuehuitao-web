@@ -3,6 +3,7 @@ ini_set ( 'date.timezone', 'Asia/Shanghai' );
 
 require_once ('../../../include/share.php');
 require_once ('../../../include/device.php');
+require_once ('../../../include/order.php');
 
 // DB连接
 $db = connectDB ();
@@ -31,8 +32,7 @@ if (empty ( $device_id ) || empty ( $goods_name ) || empty ( $goods_price )) {
 
 $order_id = getMillisecond();
 // 创建订单
-$sql = "insert into vem_order_list (order_id, device_id, box_id, goods_name, order_price, create_date) values ('$order_id', '$device_id', '$box_id', '$goods_name', '$goods_price', now())";
-executeSQL ( $db, $sql );
+create_order($db, $order_id, $device_id, $box_id, $goods_name, $goods_price);
 ?>
 <html>
 <head>
