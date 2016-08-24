@@ -5,8 +5,8 @@ pageContents = function() {
   store_order_list = new Ext.data.JsonStore({
     url : 'order_manager_back.php?func=order_list',
     root : 'data',
-    fields : [ 'id', 'order_id', 'device_name', 'goods_name', 'order_price',
-        'create_date' ],
+    fields : [ 'id', 'order_id', 'username', 'device_name', 'goods_name',
+        'order_price', 'create_date' ],
     idProperty : 'id',
     totalProperty : 'totalCount',
     listeners : {
@@ -15,6 +15,13 @@ pageContents = function() {
             .setText(store_order_list.reader.jsonData.current);
       }
     }
+  });
+
+  var searchWord = new Ext.form.TextField({
+    itemId : 'searchinfo',
+    name : 'searchinfo',
+    width : 150,
+    ref : '../searchinfo'
   });
 
   var grid_order_list = new Ext.grid.GridPanel({
@@ -34,6 +41,12 @@ pageContents = function() {
       flex : .3,
       height : 20,
       dataIndex : 'order_id'
+    }, {
+      header : '加盟商',
+      sortable : true,
+      height : 20,
+      flex : .3,
+      dataIndex : 'username'
     }, {
       header : '设备名称',
       sortable : true,
@@ -62,6 +75,35 @@ pageContents = function() {
       dataIndex : 'create_date'
     } ],
     tbar : [ '->', {
+      xtype : 'combo',
+      allowBlank : false,
+      width : 120,
+      mode : 'local',
+      fieldLabel : '加盟商',
+      triggerAction : "all",
+      editable : false,
+      store : new Ext.data.JsonStore({
+        url : 'admin_user_manager_back.php?func=admin_device_user_list',
+        root : 'data',
+        fields : [ 'id', 'username' ],
+        idProperty : 'id',
+        autoLoad : true
+      }),
+      valueField : 'id',
+      displayField : 'username',
+      hiddenName : 'admin_user_id',
+      listeners : {
+        select : function(combo) {
+          var searchAdminUserId = combo.getValue();
+          store_order_list.setBaseParam('admin_user_id', searchAdminUserId);
+          store_order_list.load();
+        }
+      }
+    }, '-', searchWord, {
+      handler : searchObject,
+      icon : 'images/search.png',
+      tooltip : 'press ENTER to search'
+    }, '-', {
       icon : 'images/prev.png',
       tooltip : 'previous',
       handler : function() {
@@ -84,6 +126,19 @@ pageContents = function() {
       displayMsg : '{0} - {1} of {2}'
     })
   });
+
+  searchWord.on("specialkey", function(field, ev) {
+    if (ev.getKey() == ev.ENTER) {
+      ev.preventDefault();
+      searchObject();
+    }
+  });
+
+  function searchObject() {
+    store_order_list.setBaseParam('searchinfo', grid_order_list.searchinfo
+        .getValue());
+    grid_order_list.store.load();
+  }
 
   function onHandler(type) {
     switch (type) {

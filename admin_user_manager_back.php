@@ -117,10 +117,20 @@ try {
    break;
   
   case 'admin_device_user_list' :
-   $sql = "SELECT id, username FROM vem_admin_user where type = 2";
+   $sql = "SELECT id, username FROM vem_admin_user WHERE type = 2";
+   
+   if ($userinfo ["type"] == 2) {
+    $sql .= " AND id = " . $userinfo ["id"];
+   }
    
    $result = querySQL ( $db, $sql );
    $data = array ();
+   if ($userinfo ["type"] == 1) {
+    $data [] = array (
+      "id" => "",
+      "username" => "无" 
+    );
+   }
    while ( $row = mysql_fetch_assoc ( $result ) ) {
     $data [] = $row;
    }

@@ -1,4 +1,4 @@
-addDeviceWindow = function(grid) {
+editDeliveryUserWindow = function(grid, delivery_user_id) {
   var wnd = this;
 
   var frm = new Ext.FormPanel({
@@ -6,57 +6,26 @@ addDeviceWindow = function(grid) {
     width : 180,
     defaultType : 'textfield',
     frame : true,
-    url : 'device_manager_back.php?func=device_create',
+    url : 'delivery_user_manager_back.php?func=delivery_user_update',
     labelAlign : 'right',
     labelPad : 10,
     labelWidth : 80,
     items : [ {
       xtype : 'textfield',
-      name : 'device_code',
-      allowBlank : false,
-      anchor : '55%',
-      fieldLabel : '设备标识',
-      labelStyle : 'font-weight:bold;',
-      emptyText : '填写格式：yuehuotao0001'
+      name : 'id',
+      hidden : true
     }, {
       xtype : 'textfield',
-      name : 'device_name',
+      name : 'username',
       allowBlank : false,
       anchor : '55%',
-      fieldLabel : '设备名称',
-      labelStyle : 'font-weight:bold;'
+      fieldLabel : '用户名'
     }, {
       xtype : 'textfield',
-      name : 'device_address',
-      allowBlank : false,
-      anchor : '75%',
-      fieldLabel : '设备地址',
-      labelStyle : 'font-weight:bold;'
-    }, {
-      xtype : 'numberfield',
-      name : 'box_number',
+      name : 'password',
       allowBlank : false,
       anchor : '55%',
-      fieldLabel : '格子数量',
-      labelStyle : 'font-weight:bold;'
-    }, {
-      xtype : 'combo',
-      name : 'admin_user_id',
-      hiddenName : 'admin_user_id',
-      width : 150,
-      store : new Ext.data.JsonStore({
-        url : 'admin_user_manager_back.php?func=admin_device_user_list',
-        root : 'data',
-        fields : [ 'id', 'username' ],
-        idProperty : 'id',
-        autoLoad : true
-      }),
-      triggerAction : 'all',
-      mode : 'local',
-      valueField : 'id',
-      displayField : 'username',
-      editable : false,
-      fieldLabel : '加盟商',
+      fieldLabel : '密码',
       labelStyle : 'font-weight:bold;'
     } ],
     buttons : [
@@ -97,7 +66,7 @@ addDeviceWindow = function(grid) {
         } ]
   });
 
-  addDeviceWindow.superclass.constructor.call(this, {
+  editDeliveryUserWindow.superclass.constructor.call(this, {
     closeAction : 'destroy',
     items : [ frm ],
     height : 250,
@@ -105,10 +74,20 @@ addDeviceWindow = function(grid) {
     layout : 'fit',
     border : false,
     frame : true,
-    title : '添加设备',
+    title : '修改配送员',
     modal : true,
     plain : true
   });
+  this.on("beforeshow", function() {
+    frm.getForm().load({
+      url : 'delivery_user_manager_back.php?func=delivery_user_info',
+      params : {
+        delivery_user_id : delivery_user_id
+      },
+      success : function(form, action) {
+      }
+    });
+  });
 }
 
-Ext.extend(addDeviceWindow, Ext.Window, {});
+Ext.extend(editDeliveryUserWindow, Ext.Window, {});

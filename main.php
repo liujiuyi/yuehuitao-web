@@ -72,6 +72,17 @@ if ($CurPage == 'order_manager.php')
 else
  echo "<dd><a href='order_manager.php'>订单管理</a></dd>";
 
+if ($userinfo ["type"] == 1) {
+ if ($CurPage == 'admin_user_manager.php')
+  echo "<dd>管理员管理</dd>";
+ else
+  echo "<dd><a href='admin_user_manager.php'>管理员管理</a></dd>";
+} else {
+ if ($CurPage == 'delivery_user_manager.php')
+  echo "<dd>配送员管理</dd>";
+ else
+  echo "<dd><a href='delivery_user_manager.php'>配送员管理</a></dd>";
+}
 ?>
 <dd>
      <a id="ch_password" href='#'>修改密码</a>
@@ -83,20 +94,6 @@ else
   </div>
   <div class='top_info'>
    <div id="user_info_bar" class="user_info_bar"><?php
-   if ($userinfo ["type"] == USER_TYPE_2_PROJECT) {
-    echo "项目部,";
-    echo $userinfo ["department_name"] . ",";
-   }
-   if ($userinfo ["type"] == USER_TYPE_3_PURCHASE) {
-    echo "采购部,";
-   }
-   if ($userinfo ["type"] == USER_TYPE_4_DEPOT) {
-    echo "库存部,";
-    echo $userinfo ["department_name"] . ",";
-   }
-   if ($userinfo ["type"] == USER_TYPE_5_AUDIT) {
-    echo "审计部,";
-   }
    echo $userinfo ["username"];
    ?></div>
   </div>

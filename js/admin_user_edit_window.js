@@ -32,7 +32,7 @@ editAdminUserWindow = function(grid, admin_user_id) {
       name : 'type',
       allowBlank : false,
       anchor : '55%',
-      fieldLabel : '是否有货',
+      fieldLabel : '类型',
       labelStyle : 'font-weight:bold;',
       items : [ {
         boxLabel : '管理员',

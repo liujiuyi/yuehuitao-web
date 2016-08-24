@@ -62,7 +62,8 @@ editDeviceWindow = function(grid, device_id) {
       valueField : 'id',
       displayField : 'username',
       editable : false,
-      fieldLabel : '加盟商'
+      fieldLabel : '加盟商',
+      labelStyle : 'font-weight:bold;'
     } ],
     buttons : [
         {

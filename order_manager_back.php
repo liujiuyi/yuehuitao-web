@@ -23,11 +23,19 @@ try {
    $sql = "select date_format(date_add(CURDATE(),interval " . $x_pos . " day), '%Y-%m-%d')";
    $current = executeScalar ( $db, $sql ); // 返回日期
    
-   $sql = "SELECT o.*, d.device_name FROM vem_order_list o, vem_device d where o.device_id = d.id and status = 1 and o.create_date like '" . $current . "%'";
+   $searchinfo = getQueryData ( 'searchinfo' );
+   $admin_user_id = getQueryData ( 'admin_user_id' );
+   
+   $sql = "SELECT o.*, d.device_name, a.username FROM vem_order_list o LEFT JOIN vem_device d ON o.device_id = d.id LEFT JOIN vem_admin_user a ON a.id = d.admin_user_id WHERE o.status = 1 AND o.create_date like '" . $current . "%'";
    
    if ($userinfo ["type"] == 2) {
     $sql .= " AND d.admin_user_id = " . $userinfo ["id"];
+   } else if ($admin_user_id != '' && isset ( $admin_user_id )) {
+    $sql .= " AND d.admin_user_id = " . $admin_user_id;
    }
+   
+   if ($searchinfo != '' && isset ( $searchinfo ))
+    $sql .= " AND (o.order_id = " . correctSQL ( $searchinfo ) . " or d.device_name LIKE '%" . $searchinfo . "%')";
    
    $sql .= "  ORDER BY o.id DESC";
    
