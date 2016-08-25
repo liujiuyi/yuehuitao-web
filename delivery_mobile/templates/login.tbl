@@ -1,0 +1,28 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/> 
+<title>悦惠淘自动贩卖机</title>
+<link href="styles/style.css" rel="stylesheet" />
+</head>
+<body>
+ <div class="container">
+  <div class="header">
+   <img src="images/mlogo.png" style="margin: 10px 0px 0px 15px" />
+  </div>
+  <div class="products-list">
+    <form action="login.php?func=login" method="post">
+      <div align="center">
+        <input placeholder="用户名" name="username" type="text" class="input-style">
+        <input placeholder="密  码"  name="password" type="password" class="input-style"/>
+        <button class="login_button" type="submit">登录</button>
+      </div>
+    </form>
+  </div>
+ <div class="footer">
+  <div class="gezifooter">
+   <p>2005-2016 悦惠淘 版权所有，并保留所有权利</p>
+  </div>
+ </div>
+</body>
+</html>

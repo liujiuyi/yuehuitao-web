@@ -54,7 +54,7 @@ pageContents = function() {
       tooltip : 'delete Delivery User',
       handler : onRemoveDeliveryUser
     }, '->', {
-      text : '为配货员指定设备',
+      text : '配货员设备管理',
       icon : 'images/push.png',
       tooltip : 'push Device',
       handler : onPushDevice

@@ -1,5 +1,5 @@
 <?php
-require 'smarty/Smarty.class.php';
+require '../smarty/Smarty.class.php';
 $smarty = new Smarty ();
 $smarty->compile_check = true;
 

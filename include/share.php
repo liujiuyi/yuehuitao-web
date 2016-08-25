@@ -542,4 +542,51 @@ function getMillisecond() {
  list ( $t1, $t2 ) = explode ( ' ', microtime () );
  return ( float ) sprintf ( '%.0f', (floatval ( $t1 ) + floatval ( $t2 )) * 1000 );
 }
+
+// Device User login
+function delivery_login($conn, $username, $password) {
+ global $logger;
+
+ $sql = "SELECT *
+		        FROM vem_delivery_user
+		       WHERE username = " . correctSQL ( $username ) . " AND password = " . correctSQL ( $password );
+
+ $result = querySQL ( $conn, $sql );
+ $row = mysql_fetch_assoc ( $result );
+
+ if ($row != null) {
+  $sql = "UPDATE vem_delivery_user SET last_login_ip = " . correctSQL ( $_SERVER ['REMOTE_ADDR'] ) . ", last_login_date = " . correctSQL ( time (), 1 ) . " WHERE id = " . $row ["id"];
+
+  executeSQL ( $conn, $sql );
+  $logger->info ( $username . " 于 " . date ( 'Y-m-d H:i:s', time () ) . " 登录" );
+ }
+
+ return $row;
+}
+
+function saveDeliveryLoginInfo($userid) {
+ $delivery_user_login_key = 'delivery_user_login_' . $userid;
+
+ $delivery_user_login_data = array ();
+ $delivery_user_login_data ["time"] = time ();
+
+ setSessionData ( $delivery_user_login_key, $delivery_user_login_data );
+}
+
+function checkDeliveryLoginInfo($userid) {
+ global $logger;
+ 
+ $delivery_user_login_key = 'delivery_user_login_' . $userid;
+ $delivery_user_login_data = getSessionData ( $delivery_user_login_key );
+ 
+ if (time () - $delivery_user_login_data ["time"] > USER_LOGIN_TIMEOUT) {
+  $delivery_userinfo = getSessionData ( "delivery_userinfo_archive" );
+  $logger->info ( $delivery_userinfo ['username'] . " 于 " . date ( 'Y-m-d H:i:s', time () ) . " 登录超时" );
+  
+  unset ( $_SESSION ['delivery_userinfo_archive'] );
+  return true;
+ }
+ 
+ return false;
+}
 ?>
