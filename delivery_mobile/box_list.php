@@ -1,8 +1,10 @@
 <?php
-require '../smarty/Smarty.class.php';
 require_once ('../include/share.php');
-$smarty = new Smarty ();
-$smarty->compile_check = true;
+if (! isset ( $smarty )) {
+ require '../smarty/Smarty.class.php';
+ $smarty = new Smarty ();
+ $smarty->compile_check = true;
+}
 
 $delivery_userinfo = getSessionData ( "delivery_userinfo" );
 $expireMessage = "";

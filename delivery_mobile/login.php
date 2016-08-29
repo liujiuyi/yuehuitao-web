@@ -1,9 +1,10 @@
 <?php
-require '../smarty/Smarty.class.php';
 require_once ('../include/share.php');
-$smarty = new Smarty ();
-$smarty->compile_check = true;
-
+if (! isset ( $smarty )) {
+ require '../smarty/Smarty.class.php';
+ $smarty = new Smarty ();
+ $smarty->compile_check = true;
+}
 $faileMessage = '';
 if (isset ( $_GET ["func"] )) {
  if ($_GET ["func"] == "login") {
@@ -28,11 +29,11 @@ if (isset ( $_GET ["func"] )) {
  }
 }
 
-if ($faileMessage != '') {
- echo "<script>window.alert('账号或密码错误');</script>";
+if (isset ( $faileMessage ) && $faileMessage != '') {
+ echo "<script>window.alert('" . $faileMessage . "');</script>";
 }
-
-
-
+if (isset ( $expireMessage ) && $expireMessage != '') {
+ $smarty->assign ( "expire_message", $expireMessage );
+}
 $smarty->display ( 'login.tbl' );
 ?>

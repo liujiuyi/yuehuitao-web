@@ -18,6 +18,9 @@
         <button class="login_button" type="submit">登录</button>
       </div>
     </form>
+    <div class="error_msg">
+      {$expire_message}
+    </div>
   </div>
  <div class="footer">
   <div class="gezifooter">
