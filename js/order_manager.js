@@ -5,8 +5,7 @@ pageContents = function() {
   store_order_list = new Ext.data.JsonStore({
     url : 'order_manager_back.php?func=order_list',
     root : 'data',
-    fields : [ 'id', 'order_id', 'username', 'device_name', 'goods_name',
-        'order_price', 'create_date' ],
+    fields : [ 'id', 'order_id', 'username', 'device_name', 'order_price', 'create_date' ],
     idProperty : 'id',
     totalProperty : 'totalCount',
     listeners : {
@@ -20,8 +19,9 @@ pageContents = function() {
   var searchWord = new Ext.form.TextField({
     itemId : 'searchinfo',
     name : 'searchinfo',
-    width : 150,
-    ref : '../searchinfo'
+    width : 180,
+    ref : '../searchinfo',
+    emptyText : '请输入订单号或者设备名称'
   });
 
   var grid_order_list = new Ext.grid.GridPanel({
@@ -53,12 +53,6 @@ pageContents = function() {
       height : 20,
       flex : .3,
       dataIndex : 'device_name'
-    }, {
-      header : '商品名称',
-      sortable : true,
-      height : 20,
-      flex : 1,
-      dataIndex : 'goods_name'
     }, {
       height : 20,
       header : '金额',

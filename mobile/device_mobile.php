@@ -9,7 +9,7 @@ require_once ('../include/device.php');
 $db = connectDB ();
 
 $device_id = getQueryData ( "device_id" );
-$result = get_device_box_list($db, $device_id);
+$result = get_device_box_list ( $db, $device_id );
 $data1 = array ();
 $data2 = array ();
 
@@ -21,6 +21,11 @@ while ( $row = mysql_fetch_assoc ( $result ) ) {
   $data2 [] = $row;
  }
  $index ++;
+}
+if (strpos ( $_SERVER ['HTTP_USER_AGENT'], 'MicroMessenger' ) !== false) {
+ $smarty->assign ( "submit_url", "payment/wxpay/pay.php" );
+} else {
+ $smarty->assign ( "submit_url", "payment/alipay/pay.php" );
 }
 $smarty->assign ( "box_list1", $data1 );
 $smarty->assign ( "box_list2", $data2 );

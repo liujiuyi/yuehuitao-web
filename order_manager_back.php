@@ -26,7 +26,7 @@ try {
    $searchinfo = getQueryData ( 'searchinfo' );
    $admin_user_id = getQueryData ( 'admin_user_id' );
    
-   $sql = "SELECT o.*, d.device_name, a.username FROM vem_order_list o LEFT JOIN vem_device d ON o.device_id = d.id LEFT JOIN vem_admin_user a ON a.id = d.admin_user_id WHERE o.status = 1 AND o.create_date like '" . $current . "%'";
+   $sql = "SELECT o.*, d.device_name, a.username FROM vem_order_list o LEFT JOIN vem_order_goods g ON o.order_id = g.order_id LEFT JOIN vem_device d ON g.device_id = d.id LEFT JOIN vem_admin_user a ON a.id = d.admin_user_id WHERE o.status = 1 AND o.create_date like '" . $current . "%'";
    
    if ($userinfo ["type"] == 2) {
     $sql .= " AND d.admin_user_id = " . $userinfo ["id"];
