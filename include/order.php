@@ -33,15 +33,20 @@ function notify_order($db, $out_trade_no) {
   $sql = "update vem_order_list set status = 1 where order_id =" . correctSQL ( $out_trade_no );
   executeSQL ( $db, $sql );
   
-  // 更改盒子状态
-  $sql = "update vem_device_box set status = 0 where id =" . $order_info ['box_id'];
-  executeSQL ( $db, $sql );
-  
-  // 发送http请求开门
-  if (sendOpenBox ( $db, $order_info ['box_id'], $out_trade_no )) {
-   // 更改订单状态
-   $sql = "update vem_order_list set is_open = 1 where order_id =" . correctSQL ( $out_trade_no );
+  // 查找所有盒子信息
+  $sql = "select * from vem_order_goods where order_id = " . correctSQL ( $out_trade_no );
+  $result = querySQL ( $db, $sql );
+  while ( $box = mysql_fetch_assoc ( $result ) ) {
+   // 更改盒子状态
+   $sql = "update vem_device_box set status = 0 where id =" . $box ['box_id'];
    executeSQL ( $db, $sql );
+   
+   // 发送http请求开门
+   if (sendOpenBox ( $db, $box ['box_id'], $out_trade_no )) {
+    // 更改订单状态
+    $sql = "update vem_order_list set is_open = 1 where order_id =" . correctSQL ( $out_trade_no );
+    executeSQL ( $db, $sql );
+   }
   }
  }
 }

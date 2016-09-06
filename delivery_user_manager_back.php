@@ -17,7 +17,7 @@ try {
  
  switch ($func) {
   case 'delivery_user_list' :
-   $sql = "SELECT * FROM vem_delivery_user ORDER BY id ASC";
+   $sql = "SELECT * FROM vem_delivery_user where admin_user_id = " . $userinfo ["id"] . " ORDER BY id ASC";
    
    $listsql = "SELECT * FROM (" . $sql . ") AS t";
    
