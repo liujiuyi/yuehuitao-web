@@ -13,7 +13,7 @@ $order_id = getMillisecond ();
 $db = connectDB ();
 
 // 检索商品信息
-$box_id_array = explode(',', getQueryData ( "box_id" ));
+$box_id_array = explode ( ',', getQueryData ( "box_id" ) );
 
 foreach ( $box_id_array as $box_id ) {
  $box_info = get_device_box_info ( $db, $box_id );
@@ -48,12 +48,12 @@ if (count ( $order_goods_list ) > 0) {
  return;
 }
 foreach ( $order_goods_list as $order_goods ) {
- $order_goods_name .= $order_goods ['goods_name'];
+ $order_goods_name = $order_goods ['goods_name'];
 }
+
 // ①、获取用户openid
 $tools = new JsApiPay ();
 $openId = $tools->GetOpenid ();
-
 // ②、统一下单
 $input = new WxPayUnifiedOrder ();
 $input->SetBody ( $order_goods_name );
@@ -86,7 +86,6 @@ $jsApiParameters = $tools->GetJsApiParameters ( $order );
 			<?php echo $jsApiParameters; ?>,
 			function(res){
 				WeixinJSBridge.log(res.err_msg);
-				alert(res.err_code+res.err_desc+res.err_msg);
 			}
 		);
 	}
@@ -149,34 +148,32 @@ $jsApiParameters = $tools->GetJsApiParameters ( $order );
   </div>
   <div class="wxpay_content">
    <?php foreach($order_goods_list as $order_goods){?>
-    <hr/>
-    <font>
-    <b class="wxpay_title">商品名称：
-    <span class="wxpay_value"><?php echo $order_goods['goods_name'];?></span>
-    </b>
-    </font>
-    <br />
-    <font>
-    <b class="wxpay_title">商品金额：
-    <span class="wxpay_value"><?php echo $order_goods['goods_price']?></span>元钱</b></font> 
-    <br /> 
-    <?php if (!empty($order_goods['goods_image'])){ ?>
-      <img class="wxpay_image" alt="" src="../../../<?php echo PHOTO_URL_PREFIX. $order_goods['goods_image']?>" />
-   <?php 
-       }
-       $order_goods_name .= $order_goods['goods_name'];
-     }
+    <hr />
+   <font> <b class="wxpay_title">商品名称： <span class="wxpay_value"><?php echo $order_goods['goods_name'];?></span>
+   </b>
+   </font> <br /> <font> <b class="wxpay_title">商品金额： <span
+     class="wxpay_value"><?php echo $order_goods['goods_price']?></span>元钱
+   </b></font> <br /> 
+    <?php if (!empty($order_goods['goods_url'])){ ?>
+    <font> <a href="<?php echo $order_goods['goods_url']?>"
+    target="_blank"><b class="wxpay_title">商品介绍： <span
+      class="wxpay_value">点击查看</span></b></a></font> <br /> 
+    <?php } if (!empty($order_goods['goods_image'])){ ?>
+      <img class="wxpay_image" alt=""
+    src="../../../<?php echo PHOTO_URL_PREFIX. $order_goods['goods_image']?>" />
+   <?php
+    }
+    $order_goods_name .= $order_goods ['goods_name'];
+   }
    ?>
-   <hr/>
-   <font>
-   <b class="wxpay_title">合计金额：
-   <span class="wxpay_value"><?php echo $order_price?></span>元钱</b></font> 
-   <br /> 
-   <br />
+   <hr />
+   <font> <b class="wxpay_title">合计金额： <span class="wxpay_value"><?php echo $order_price?></span>元钱
+   </b></font> <br /> <br />
    <div align="center">
     <button class="wxpay_button" type="button" onclick="callpay()">立即支付</button>
     <button class="return_button" type="button" onclick="history.go(-1)">返回上一页</button>
-    <input class="open_button" type="button" value="弹开格子" onclick="openBox(this)" />
+    <input class="open_button" type="button" value="弹开格子"
+     onclick="openBox(this)" />
    </div>
   </div>
   <div class="footer">
@@ -184,5 +181,6 @@ $jsApiParameters = $tools->GetJsApiParameters ( $order );
     <p>2005-2016 悦惠淘 版权所有，并保留所有权利</p>
    </div>
   </div>
+
 </body>
 </html>

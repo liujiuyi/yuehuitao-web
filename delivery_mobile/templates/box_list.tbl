@@ -43,10 +43,10 @@
    <img src="images/mlogo.png" style="margin: 10px 0px 0px 15px" />
   </div>
   <div class="box-list">
-     {foreach from=$box_list item=box_data}
+     {foreach from=$box_list item=box_data name=box_index}
      <div class="box" style="{if $box_data.status == 0} background-color: #FD0000; {/if}">
         <div class="text">
-          {$box_data.goods_name}
+          ({$box_data.box_no}){$box_data.goods_name}
         </div>
         <button class="over_button" type="button" onclick="box_over({$box_data.id})">补货完成</button>
         <button class="open_button" type="button" onclick="box_open({$box_data.id})">弹开补货</button>

@@ -31,12 +31,14 @@ try {
   case 'box_update' :
    $goods_image = savePhoto ( PHOTO_URL_PREFIX );
    $box_id = getQueryData ( 'box_id' );
+   $box_no = getQueryData ( 'box_no'); 
    $goods_name = getQueryData ( 'goods_name' );
    $goods_price = getQueryData ( 'goods_price' );
+   $goods_url = getQueryData ( 'goods_url' );
    $status = getQueryData ( 'status' );
    
-   $sql = "UPDATE vem_device_box SET status = " . $status . ", 
-     goods_name = " . correctSQL ( $goods_name ) . ", goods_price = " . $goods_price;
+   $sql = "UPDATE vem_device_box SET status = " . $status . ", box_no = " . correctSQL ( $box_no ) . ", 
+     goods_name = " . correctSQL ( $goods_name ) . ", goods_price = " . $goods_price . ", goods_url = " . correctSQL ( $goods_url );
    
    if($goods_image && !empty($goods_image)){
      $sql .= " ,goods_image = " . correctSQL ( $goods_image );

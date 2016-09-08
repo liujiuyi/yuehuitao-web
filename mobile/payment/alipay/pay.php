@@ -72,7 +72,12 @@ if (count ( $order_goods_list ) > 0) {
      <b class="wxpay_title">商品金额：
      <span class="wxpay_value"><?php echo $order_goods['goods_price']?></span>元钱</b></font> 
      <br /> 
-     <?php if (!empty($order_goods['goods_image'])){ ?>
+     <?php if (!empty($order_goods['goods_url'])){ ?>
+     <font>
+     <a href="<?php echo $order_goods['goods_url']?>" target="_blank"><b class="wxpay_title">商品介绍：
+     <span class="wxpay_value">点击查看</span></b></a></font> 
+     <br /> 
+     <?php } if (!empty($order_goods['goods_image'])){ ?>
        <img class="wxpay_image" alt="" src="../../../<?php echo PHOTO_URL_PREFIX. $order_goods['goods_image']?>" />
     <?php 
         }

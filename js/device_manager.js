@@ -152,7 +152,7 @@ pageContents = function() {
   store_box_list = new Ext.data.JsonStore({
     url : 'box_manager_back.php?func=box_list',
     root : 'data',
-    fields : [ 'id', 'box_number', 'device_id', 'goods_name', 'goods_price',
+    fields : [ 'id', 'box_number', 'box_no', 'device_id', 'goods_name', 'goods_price',
         'status' ],
     idProperty : 'id',
     totalProperty : 'totalCount'
@@ -180,6 +180,11 @@ pageContents = function() {
       sortable : true,
       height : 20,
       dataIndex : 'box_number'
+    }, {
+      header : '格子序号',
+      sortable : true,
+      height : 20,
+      dataIndex : 'box_no'
     }, {
       header : '商品名称',
       sortable : true,

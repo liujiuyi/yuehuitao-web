@@ -18,6 +18,14 @@ editBoxWindow = function(grid, box_id) {
       value : box_id
     }, {
       xtype : 'textfield',
+      name : 'box_no',
+      allowBlank : false,
+      anchor : '90%',
+      fieldLabel : '格子序号',
+      labelStyle : 'font-weight:bold;',
+      emptyText : '填写格式：1-1'
+    }, {
+      xtype : 'textfield',
       name : 'goods_name',
       allowBlank : false,
       anchor : '90%',
@@ -29,6 +37,12 @@ editBoxWindow = function(grid, box_id) {
       allowBlank : false,
       anchor : '55%',
       fieldLabel : '商品价格',
+      labelStyle : 'font-weight:bold;'
+    }, {
+      xtype : 'textfield',
+      name : 'goods_url',
+      anchor : '90%',
+      fieldLabel : '商品介绍链接',
       labelStyle : 'font-weight:bold;'
     }, {
       xtype : 'radiogroup',
@@ -103,8 +117,8 @@ editBoxWindow = function(grid, box_id) {
   editBoxWindow.superclass.constructor.call(this, {
     closeAction : 'destroy',
     items : [ frm ],
-    height : 250,
-    width : 340,
+    height : 340,
+    width : 540,
     layout : 'fit',
     border : false,
     frame : true,

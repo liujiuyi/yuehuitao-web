@@ -494,6 +494,8 @@ function sendOpenBox($conn, $box_id, $order_id) {
  $open_info = mysql_fetch_assoc ( $result );
  if ($open_info != null) {
   $url = OPEN_DEVICE_URL . 'command.action?action=01&index=' . $open_info ['box_number'] . '&device=' . $open_info ['device_code'] . '&order_id=' . $order_id . '';
+  global $logger;
+  $logger->debug ( "send url: " . $url);
   $ch = curl_init ();
   $timeout = 5;
   curl_setopt ( $ch, CURLOPT_URL, $url );

@@ -42,8 +42,12 @@ class PayNotifyCallBack extends WxPayNotify {
   // 根据 $data["out_trade_no"] 订单号 更新订单状态
   // 执行更新
   // DB连接
-  $out_trade_no = $data ["out_trade_no"];
-  notify_order($db, $out_trade_no);
+  Log::DEBUG ( "call back result_code:" . $data ["result_code"] );
+  if($data ["result_code"] == "SUCCESS"){
+   $out_trade_no = $data ["out_trade_no"];
+   $db = connectDB ();
+   notify_order($db, $out_trade_no);
+  }
   return true;
  }
 }
