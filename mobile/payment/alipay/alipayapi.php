@@ -60,7 +60,7 @@ $parameter = array (
   "total_fee" => $total_fee,
   "show_url" => $show_url,
   
-  // "app_pay" => "Y",//启用此参数能唤起钱包APP支付宝
+  "app_pay" => "Y",//启用此参数能唤起钱包APP支付宝
   "body" => $body 
 )
 // 其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.2Z6TSk&treeId=60&articleId=103693&docType=1

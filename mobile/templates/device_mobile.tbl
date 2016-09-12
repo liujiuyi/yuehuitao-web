@@ -6,6 +6,36 @@
 <link href="styles/style.css" rel="stylesheet" />
 {literal}
 <script type="text/javascript">
+function onChecked(){
+  var e = document.box_list_form.elements;
+  var j = 0;
+  for(var i=0; i<e.length; i++)
+  {
+    if(e[i].type=="checkbox" && e[i].checked) j++
+    if(j > 5)
+    {
+       alert("很抱歉，您最多只能选择五个。");
+       event.srcElement.checked = false;
+       break;
+    }
+  }
+}
+
+function onSubmintCheck(){
+  var x = document.box_list_form.elements;
+  var y = 0;
+  for(var z=0; z<x.length; z++)
+  {
+    if(x[z].type=="checkbox" && x[z].checked) y++
+  }
+  if(y > 0)
+  {
+    return true;
+  } else {
+    alert("请选择要购买商品的格子编号");
+    return false;
+  }
+}
 </script>
 {/literal}
 </head>
@@ -14,16 +44,18 @@
   <div class="header">
    <img src="images/mlogo.png" style="margin: 10px 0px 0px 15px" />
   </div>
-  <form action="{$submit_url}" method="post">
+  <form action="{$submit_url}" method="post" name="box_list_form" onsubmit="return onSubmintCheck()" >
   <div class="products-list">
      {foreach from=$box_list1 item=box_data}
      <div class="product">
-     <input class="checkbox" type="checkbox" name="box_id[]" value="{$box_data.id}"/>
+     <input class="checkbox" type="checkbox" name="box_id[]" value="{$box_data.id}" onClick="onChecked()" {if $box_data.status == 0}disabled{/if}/>
+	 <p class="box_no">{$box_data.box_no}</p>
      </div>
      {/foreach}
      {foreach from=$box_list2 item=box_data}
      <div class="product2">
-     <input class="checkbox" type="checkbox" name="box_id[]" value="{$box_data.id}"/>
+     <input class="checkbox" type="checkbox" name="box_id[]" value="{$box_data.id}" onClick="onChecked()" {if $box_data.status == 0}disabled{/if}/>
+	 <p class="box_no">{$box_data.box_no}</p>
      </div>
      {/foreach}
      <input name="" type="submit" value="提交" class="submit"/> 
