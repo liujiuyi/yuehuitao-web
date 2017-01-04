@@ -10,7 +10,7 @@ function create_order($db, $order_id, $order_price) {
  executeSQL ( $db, $sql );
 }
 function get_order_goods_list($db, $order_id) {
- $sql = "select g.*, b.goods_image, b.goods_url from vem_order_goods g, vem_device_box b where g.box_id = b.id and g.order_id =" . correctSQL ( $order_id );
+ $sql = "select g.*, b.goods_image, b.goods_url, b.box_no from vem_order_goods g, vem_device_box b where g.box_id = b.id and g.order_id =" . correctSQL ( $order_id );
  $result = querySQL ( $db, $sql );
  $data = array ();
  while ( $row = mysql_fetch_assoc ( $result ) ) {
@@ -47,7 +47,7 @@ function notify_order($db, $out_trade_no) {
     $sql = "update vem_order_list set is_open = 1 where order_id =" . correctSQL ( $out_trade_no );
     executeSQL ( $db, $sql );
    }
-   sleep(2);//等待一秒执行下次循环
+   sleep(6);//等待一秒执行下次循环
   }
  }
 }

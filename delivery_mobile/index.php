@@ -2,6 +2,12 @@
 require_once ('../include/share.php');
 $delivery_userinfo = getSessionData ( "delivery_userinfo" );
 
+if (isset ( $_REQUEST ["logout"] )) {
+ if ($_REQUEST ['logout'] != null) {
+  unset ( $_SESSION ['delivery_userinfo'] );
+ }
+}
+
 if ($delivery_userinfo == null) {
  require_once ("login.php");
 } else {

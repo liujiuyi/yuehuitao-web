@@ -15,7 +15,7 @@ $data2 = array ();
 
 $index = 1;
 while ( $row = mysql_fetch_assoc ( $result ) ) {
- if ($index <= 48) {
+ if ($index <= 40) {
   $data1 [] = $row;
  } else {
   $data2 [] = $row;

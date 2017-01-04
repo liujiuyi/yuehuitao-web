@@ -26,6 +26,25 @@ if (isset ( $_GET ["func"] )) {
     $faileMessage = '帐号或密码错误！';
    }
   }
+ } else if ($_GET ["func"] == "logout") {
+  $db = connectDB ();
+  
+  $username = $_POST ["username"];
+  $password = $_POST ["password"];
+  if ($username == "") {
+   $faileMessage = '帐号不能为空！';
+  } else if ($password == "") {
+   $faileMessage = '密码不能为空！';
+  } else {
+   $delivery_userinfo = delivery_login ( $db, $username, $password );
+   if ($delivery_userinfo != null) {
+    setSessionData ( "delivery_userinfo", $delivery_userinfo );
+    saveDeliveryLoginInfo ( $delivery_userinfo ['id'] );
+    gotoURL ( 'index.php' );
+   } else {
+    $faileMessage = '帐号或密码错误！';
+   }
+  }
  }
 }
 

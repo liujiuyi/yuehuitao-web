@@ -1,5 +1,6 @@
 <?php
 require_once ('include/share.php');
+require_once ('include/order.php');
 // DB连接
 $db = connectDB ();
 
@@ -63,6 +64,14 @@ try {
      'totalCount' => $totalCount,
      'current' => $current 
    ) );
+   
+   break;
+  case 'order_goods_list' :
+   $order_id = getQueryData ( 'order_id' );
+   
+   $data = get_order_goods_list ( $db, $order_id );
+   
+   responseData ( true, null, $data );
    
    break;
   default :

@@ -10,6 +10,9 @@
   {
     location.href="box_list.php?device_id=" + device_id;
   }
+  function logout(){
+    location.href="index.php?logout=1";
+  }
 </script>
 {/literal}
 </head>
@@ -24,6 +27,7 @@
         {$device_data.device_name}
      </div>
      {/foreach}
+     <button class="login_button" type="button" onclick="logout()">退出</button>
   </div>
  <div class="footer">
   <div class="gezifooter">

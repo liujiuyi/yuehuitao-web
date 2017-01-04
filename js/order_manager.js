@@ -5,7 +5,8 @@ pageContents = function() {
   store_order_list = new Ext.data.JsonStore({
     url : 'order_manager_back.php?func=order_list',
     root : 'data',
-    fields : [ 'id', 'order_id', 'username', 'device_name', 'order_price', 'create_date' ],
+    fields : [ 'id', 'order_id', 'username', 'device_name', 'order_price',
+        'create_date' ],
     idProperty : 'id',
     totalProperty : 'totalCount',
     listeners : {
@@ -118,7 +119,15 @@ pageContents = function() {
       store : store_order_list,
       displayInfo : true,
       displayMsg : '{0} - {1} of {2}'
-    })
+    }),
+    listeners : {
+      rowclick : function(grid, rowIndex, e) {
+        record = store_order_list.getAt(rowIndex);
+        var order_id = record.data.order_id;
+        store_order_goods_list.setBaseParam('order_id', order_id);
+        grid_order_goods_list.store.reload();
+      }
+    }
   });
 
   searchWord.on("specialkey", function(field, ev) {
@@ -160,12 +169,53 @@ pageContents = function() {
 
   store_order_list.load();
 
+  // 订单商品grid
+  store_order_goods_list = new Ext.data.JsonStore({
+    url : 'order_manager_back.php?func=order_goods_list',
+    root : 'data',
+    fields : [ 'id', 'goods_name', 'goods_price' ],
+    idProperty : 'id',
+    totalProperty : 'totalCount'
+  });
+
+  var grid_order_goods_list = new Ext.grid.GridPanel({
+    title : '当前订单商品列表',
+    region : 'west',
+    store : store_order_goods_list,
+    viewConfig : {
+      forceFit : true
+    },
+    columns : [ new Ext.grid.RowNumberer(), {
+      header : '商品名称',
+      sortable : true,
+      height : 20,
+      dataIndex : 'goods_name'
+    }, {
+      header : '商品价格',
+      sortable : true,
+      height : 20,
+      dataIndex : 'goods_price'
+    } ]
+  });
+
   pageContents.superclass.constructor.call(this, {
     title : '订单一览',
     region : 'center',
     layout : 'border',
-    flex : 1,
-    items : grid_order_list
+    items : [ {
+      region : 'west',
+      border : true,
+      layout : 'fit',
+      split : true,
+      width : 1000,
+      items : grid_order_list
+    }, {
+      region : 'center',
+      border : true,
+      layout : 'fit',
+      split : true,
+      items : grid_order_goods_list
+    } ]
   });
 };
 

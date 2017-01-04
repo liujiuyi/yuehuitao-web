@@ -26,7 +26,7 @@ if ($order_info ['status'] == 0) {
     
    // 发送http请求开门
    sendOpenBox ( $db, $box ['box_id'], $order_id );
-   sleep(2);//等待一秒执行下次循环
+   sleep(6);//等待一秒执行下次循环
   }
  }
 }

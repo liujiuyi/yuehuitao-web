@@ -12,9 +12,9 @@ function onChecked(){
   for(var i=0; i<e.length; i++)
   {
     if(e[i].type=="checkbox" && e[i].checked) j++
-    if(j > 5)
+    if(j > 3)
     {
-       alert("很抱歉，您最多只能选择五个。");
+       alert("很抱歉，您最多只能选择三个。");
        event.srcElement.checked = false;
        break;
     }
@@ -58,7 +58,7 @@ function onSubmintCheck(){
 	 <p class="box_no">{$box_data.box_no}</p>
      </div>
      {/foreach}
-     <input name="" type="submit" value="提交" class="submit"/> 
+     <input name="" type="submit" value="加入购物车" class="submit"/> 
   </div>
   </form>
  <div class="footer">

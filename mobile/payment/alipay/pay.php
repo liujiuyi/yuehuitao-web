@@ -21,6 +21,8 @@ foreach ( $box_id_array as $box_id ) {
  
  // 设备id
  $device_id = $box_info ['device_id'];
+ // 格子编号
+ $box_no = $box_info ['box_no'];
  // 商品名称
  $goods_name = $box_info ['goods_name'];
  // 商品价格
@@ -77,7 +79,7 @@ if (count ( $order_goods_list ) > 0) {
 				  <div class="cart-item-info">
 					<a href="goods.php?id=1576">
 					  <p class="title"><?php echo $order_goods['goods_name'];?></p></a>
-					<p class="description util-ellipsis"></p>
+					<p class="description util-ellipsis">格子编号: <?php echo $order_goods['box_no'];?></p>
 					<p class="cart-control J_cart-control">
 					  <?php if (!empty($order_goods['goods_url'])){ ?>
 						 <font>
