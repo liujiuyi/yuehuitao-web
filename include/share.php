@@ -509,6 +509,25 @@ function sendOpenBox($conn, $box_id, $order_id) {
   return true;
  }
 }
+
+function sendOpenBox2($conn, $device_code, $box_number) {
+ if (!empty($device_code) && !empty($box_number)) {
+  $url = OPEN_DEVICE_URL . 'command.action?action=01&index=' . $box_number . '&device=' . $device_code;
+  global $logger;
+  $logger->debug ( "send url: " . $url);
+  $ch = curl_init ();
+  $timeout = 5;
+  curl_setopt ( $ch, CURLOPT_URL, $url );
+  curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+  curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, $timeout );
+  curl_exec ( $ch );
+  if (curl_errno ( $ch )) {
+   return false;
+  }
+  curl_close ( $ch );
+  return true;
+ }
+}
 function savePhoto($savePath) {
  global $logger;
  $logger->debug ( "savePhoto." );
